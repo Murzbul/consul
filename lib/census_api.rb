@@ -84,11 +84,45 @@ class CensusApi
     end
 
     def stubbed_response(document_type, document_number)
-      if (document_number == "12345678Z" || document_number == "12345678Y") && document_type == "1"
-        stubbed_valid_response
+
+      data = PadronMch.find(1)
+      if (document_number == data || document_number == "1234567Y") && document_type == "1"
+        # stubbed_valid_response_own
+        # data
       else
         stubbed_invalid_response
       end
+    end
+    # def stubbed_response(document_type, document_number)
+    #   if (document_number == "12345679Z" || document_number == "12345678Y") && document_type == "1"
+    #     stubbed_valid_response_own
+    #   else
+    #     stubbed_invalid_response
+    #   end
+    # end
+
+    def stubbed_valid_response_own
+      # {
+      #   get_habita_datos_response: {
+      #     get_habita_datos_return: {
+      #       datos_habitante: {
+      #         item: {
+      #           fecha_nacimiento_string: "31-12-1980",
+      #           identificador_documento: "35319152",
+      #           descripcion_sexo: "Varón",
+      #           nombre: "José",
+      #           apellido1: "García"
+      #         }
+      #       },
+      #       datos_vivienda: {
+      #         item: {
+      #           codigo_postal: "28013",
+      #           codigo_distrito: "01"
+      #         }
+      #       }
+      #     }
+      #   }
+      # }
     end
 
     def stubbed_valid_response
@@ -98,7 +132,7 @@ class CensusApi
             datos_habitante: {
               item: {
                 fecha_nacimiento_string: "31-12-1980",
-                identificador_documento: "12345678Z",
+                identificador_documento: "321123Z",
                 descripcion_sexo: "Varón",
                 nombre: "José",
                 apellido1: "García"
@@ -116,7 +150,8 @@ class CensusApi
     end
 
     def stubbed_invalid_response
-      {get_habita_datos_response: {get_habita_datos_return: {datos_habitante: {}, datos_vivienda: {}}}}
+      # {get_habita_datos_response: {get_habita_datos_return: {datos_habitante: {}, datos_vivienda: {}}}}
+
     end
 
     def dni?(document_type)

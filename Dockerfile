@@ -1,5 +1,5 @@
 # # Select ubuntu as the base image
-FROM coreapps/ruby2.3
+FROM ruby:2.3.2
 
 # Install essential Linux packages
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev postgresql-client nodejs

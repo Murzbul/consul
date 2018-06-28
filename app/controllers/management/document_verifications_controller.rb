@@ -8,21 +8,44 @@ class Management::DocumentVerificationsController < Management::BaseController
   end
 
   def check
+    @padron = PadronMch.all
+
     @document_verification = Verification::Management::Document.new(document_verification_params)
 
-    if @document_verification.valid?
-      if @document_verification.verified?
-        render :verified
-      elsif @document_verification.user?
-        render :new
-      elsif @document_verification.in_census?
-        redirect_to new_management_email_verification_path(email_verification: document_verification_params)
-      else
-        render :invalid_document
+    @padron.each do |element|
+      if element.document_number == Integer(@document_verification.document_number)
+          @document_number_l = element.document_number
+
+          if @document_verification.verified?
+              render :verified
+          elsif @document_verification.user?
+              render :new
+          else
+            redirect_to new_management_email_verification_path(email_verification: document_verification_params)
+          end
       end
-    else
-      render :index
     end
+
+    if @document_number_l != Integer(@document_verification.document_number)
+      render :invalid_document
+    end
+
+
+
+    #
+    # if @document_verification.valid?
+    #   if @document_verification.verified?
+    #     render :verified
+    #   elsif @document_verification.user?
+    #     render :new
+    #   elsif @document_verification.in_census?
+    #     redirect_to new_management_email_verification_path(email_verification: document_verification_params)
+    #   else
+    #     render :invalid_document
+    #   end
+    # else
+    #   render :index
+    # end
   end
 
   def create

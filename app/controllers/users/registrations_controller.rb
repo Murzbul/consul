@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     super do |user|
       user.use_redeemable_code = true if params[:use_redeemable_code].present?
+      @data = PadronMch.find(1)
     end
   end
 
